@@ -4,11 +4,11 @@
  * NOTE: HAS NOT BEEN TESTED ON STEPPER MOTORS YET
  */
 
-#ifndef PCF8574_Stepper_H
-#define PCF8574_Stepper_H
+#ifndef PCF8575_Stepper_H
+#define PCF8575_Stepper_H
 
 #include <Arduino.h>
-#include <PCF8574.h>
+#include <PCF8575.h>
 
 class StepperMotor{
   private:
@@ -33,11 +33,11 @@ class StepperMotor{
     void stepForward();
     void stepBackward();
 
-    PCF8574 &stepperExpander;
+    PCF8575 &stepperExpander;
 
   public:
-    //Constructor that takes in PCF8574 object, and the pins that the stepper motor is going to use
-    StepperMotor(PCF8574 &stepperExpander, int stepsPerRev, int pin1, int pin2, int pin3 = NULL, int pin4 = NULL);
+    //Constructor that takes in PCF8575 object, and the pins that the stepper motor is going to use
+    StepperMotor(PCF8575 &stepperExpander, int stepsPerRev, int pin1, int pin2, int pin3 = NULL, int pin4 = NULL);
     
     void setSpeed(float speed);
     void step(int steps);

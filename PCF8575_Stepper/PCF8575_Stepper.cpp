@@ -4,13 +4,13 @@
  * NOTE: HAS NOT BEEN TESTED ON STEPPER MOTORS YET
  */
 
-#include "PCF8574_Stepper.h"
-#include <PCF8574.h>
+#include "PCF8575_Stepper.h"
+#include <PCF8575.h>
 
 /*
- * Constructor, takes in PCF8574 object, and pins 1-4, if pin 3 or 4 are not supplied when constructor is run, stepper will default to two wire control
+ * Constructor, takes in PCF8575 object, and pins 1-4, if pin 3 or 4 are not supplied when constructor is run, stepper will default to two wire control
  */
-StepperMotor::StepperMotor(PCF8574 &stepperExpander,int stepsPerRev, int pin1, int pin2, int pin3 = NULL, int pin4 = NULL){
+StepperMotor::StepperMotor(PCF8575 &stepperExpander,int stepsPerRev, int pin1, int pin2, int pin3 = NULL, int pin4 = NULL){
   this->stepsPerRev = stepsPerRev;
   
   //Set the pins to the supplied pins
@@ -35,7 +35,7 @@ StepperMotor::StepperMotor(PCF8574 &stepperExpander,int stepsPerRev, int pin1, i
     this->stepperStates[3] = true; 
   }
 
-  //Make stepperExpander the object of the PCF8574 chip 
+  //Make stepperExpander the object of the PCF8575 chip 
   this->stepperExpander = stepperExpander;
 
   //Configure the pin modes of the stepperExpander to be either four wire control or two wire control 
@@ -100,13 +100,13 @@ void StepperMotor::stepForward(){
   }
   //Else running in four wire mode, so run in four wire step code
   else{
-    if(this->stepperStates[0] == this->stepperStates[2]){ //If the states of wire 1 and 3 are the same invert wire 1 and set wire 2 as the inverted value of wire 1 and update both outputs to the PCF8574 chip
+    if(this->stepperStates[0] == this->stepperStates[2]){ //If the states of wire 1 and 3 are the same invert wire 1 and set wire 2 as the inverted value of wire 1 and update both outputs to the PCF8575 chip
       this->stepperStates[0] = !this->stepperStates[0];
       this->stepperStates[1] = !this->stepperStates[0];
       this->stepperExpander.digitalWrite(this->pin1, this->stepperStates[0]);
       this->stepperExpander.digitalWrite(this->pin2, this->stepperStates[1]);
     } 
-    else{ //Else the states of wire 1 and 3 are not the same invert wire 3 and set wire 4 as the inverted value of wire 3 and update both outputs to the PCF8574 chip
+    else{ //Else the states of wire 1 and 3 are not the same invert wire 3 and set wire 4 as the inverted value of wire 3 and update both outputs to the PCF8575 chip
       this->stepperStates[2] = !this->stepperStates[2];
       this->stepperStates[3] = !this->stepperStates[3];
       this->stepperExpander.digitalWrite(this->pin3, this->stepperStates[2]);
